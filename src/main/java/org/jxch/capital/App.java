@@ -1,23 +1,18 @@
 package org.jxch.capital;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.*;
 import org.jxch.capital.api.YahooApi;
-import org.jxch.capital.api.dto.QuoteRes;
+import org.jxch.capital.api.dto.DownloadStockCsvParam;
+import org.jxch.capital.api.dto.HistoryRes;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.util.Calendar;
+import java.util.List;
 
 @Slf4j
 @Configuration
@@ -29,8 +24,13 @@ public class App {
 
 
     public static void main(String[] args) {
-        QuoteRes quote = YahooApi.quote("QQQ");
-        log.info(JSON.toJSONString(quote));
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -3);
+        List<HistoryRes> historyRes = YahooApi.downloadStockCsv(DownloadStockCsvParam.builder()
+                .code("QQQ")
+                .start(calendar.getTime())
+                .build());
+        log.info(JSON.toJSONString(historyRes));
     }
 
 
