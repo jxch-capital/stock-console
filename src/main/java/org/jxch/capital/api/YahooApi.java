@@ -3,6 +3,7 @@ package org.jxch.capital.api;
 import cn.hutool.core.text.csv.CsvUtil;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -24,16 +25,24 @@ public class YahooApi {
     private static final String COOKIE = System.getProperty("cookie", "GUC=AQEBCAFlULBleUIhXwTg&s=AQAAAC76j7jx&g=ZU9e-w; A1=d=AQABBK0Lr2ICEI-bBud4SuIDLaB4bqaMNbAFEgEBCAGwUGV5Zc3ibmUB_eMBAAcIrQuvYqaMNbA&S=AQAAAggpViKy189d2OkdWsFnK_Y; A3=d=AQABBK0Lr2ICEI-bBud4SuIDLaB4bqaMNbAFEgEBCAGwUGV5Zc3ibmUB_eMBAAcIrQuvYqaMNbA&S=AQAAAggpViKy189d2OkdWsFnK_Y; A1S=d=AQABBK0Lr2ICEI-bBud4SuIDLaB4bqaMNbAFEgEBCAGwUGV5Zc3ibmUB_eMBAAcIrQuvYqaMNbA&S=AQAAAggpViKy189d2OkdWsFnK_Y; gpp=DBAA; gpp_sid=-1; gam_id=y-rpk1JRJE2uL6EDgVwC0_in.GgdLv339c~A; axids=gam=y-rpk1JRJE2uL6EDgVwC0_in.GgdLv339c~A&dv360=eS00Mm1IMHpoRTJ1RXhhNVlTUGtSVWRPdkZCWExrbjFkNH5B; tbla_id=ba643052-93dc-4ae8-a277-ee1cb7f7dab5-tuctc48e47a; cmp=t=1699788664&j=0&u=1---; PRF=t%3DZURN.SW%252BSREN.SW%26newChartbetateaser%3D0%252C1700910092680");
     private static final String USER_AGENT = System.getProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0");
     private static final String CRUMB = System.getProperty("user-agent", "mdeVssfeRhi");
-    private static final String HTTP_PROXY = System.getProperty("http.proxy", "127.0.0.1");
-    private static final Integer HTTP_PORT = Integer.parseInt(System.getProperty("http.port", "10809"));
-    private static final Boolean ENABLE_PROXY = Boolean.parseBoolean(System.getProperty("proxy.enable", "true"));
+    private static String httpProxy = System.getProperty("http.proxy", "127.0.0.1");
+    private static Integer httpPort = Integer.parseInt(System.getProperty("http.port", "10809"));
+
+    @Setter
+    private static Boolean isProxy = false;
+
+    public static void enableProxy(String host, int port) {
+        isProxy = true;
+        httpProxy = host;
+        httpPort = port;
+    }
 
 
     @NonNull
     public static OkHttpClient yahooBaseClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        if (ENABLE_PROXY) {
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(HTTP_PROXY, HTTP_PORT));
+        if (isProxy) {
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxy, httpPort));
             builder.proxy(proxy);
         }
 

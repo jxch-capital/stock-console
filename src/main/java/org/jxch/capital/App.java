@@ -1,5 +1,7 @@
 package org.jxch.capital;
 
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +26,13 @@ public class App {
 
 
     public static void main(String[] args) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -3);
+        YahooApi.enableProxy("127.0.0.1", 10809);
+
         List<HistoryRes> historyRes = YahooApi.downloadStockCsv(DownloadStockCsvParam.builder()
                 .code("QQQ")
-                .start(calendar.getTime())
+                .start(DateUtil.offset(Calendar.getInstance().getTime(), DateField.MONTH, -3))
                 .build());
+
         log.info(JSON.toJSONString(historyRes));
     }
 
