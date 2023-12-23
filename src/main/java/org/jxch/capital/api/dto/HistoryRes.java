@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class HistoryRes {
-    //Date,Open,High,Low,Close,Adj Close,Volume
     @Alias("Date")
     private Date date;
     @Alias("Open")
