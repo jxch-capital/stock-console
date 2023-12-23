@@ -11,15 +11,17 @@
 
 ---
 
-## 当前版本（v0.1.0）
+## 当前版本（v1.0.0）
 
 JDK版本：17+
 
-* &#x2705; 实现控制台实时显示股票基础信息
+* &#x2705; 库版本升级
+* &#x2705; 更新控制台指令模块
+* &#x2705; 代码重构
 
 ```shell
 # 每500毫秒更新一次价格信息
-java -jar stock-console.jar 500 QQQ SPY
+java -jar .\stock-console.jar -s QQQ,SPY,AAPL,000001.SS -h 127.0.0.1 -p 10809
 ```
 
 ---
@@ -37,9 +39,14 @@ java -jar stock-console.jar 500 QQQ SPY
 
 v1.0.0
 
-* 库版本升级
-* 更新控制台指令模块
-* 代码重构
+* &#x2705; 库版本升级
+* &#x2705; 更新控制台指令模块
+* &#x2705; 代码重构
+
+```shell
+# 每500毫秒更新一次价格信息
+java -jar .\stock-console.jar -s QQQ,SPY,AAPL,000001.SS -h 127.0.0.1 -p 10809
+```
 
 v1.1.0
 
